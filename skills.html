@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <title>Font Face Demo</title>
+  <link rel="stylesheet" href="resume.css" type="text/css" charset="utf-8">
+</head>
+<body>
+  <center>
+    <h2>Skills Assessment</h2>
+    <canvas id="skills" width="1000" height="1000"/>
+  </center>
+  <script>
+    // A skills self-assessment
+    // Experience and Joy on a scale of 1-99
+    skills = [
+      // skill, exp, joy
+      [ "C", 98, 99 ],
+      [ "C++", 90, 5 ],
+      [ "x86 asm", 95, 99 ],
+      [ "ARM asm", 92, 98 ],
+      [ "Risc-V asm", 45, 99 ],
+
+      [ "Rust", 70, 99  ],
+      [ "Scheme", 65, 97 ],
+      [ "Haskell", 92, 85 ],
+      [ "OCaml", 90, 87 ],
+      [ "Agda", 10, 75 ],
+      [ "Coq", 70, 70 ],
+
+      [ "Java", 95, 22 ],
+      [ "C#", 45, 15 ],
+      [ "F#", 55, 18 ],
+      [ "Python", 50, 6 ],
+      [ "Ruby", 40, 12 ],
+      [ "Javascript", 85, 35 ],
+      [ "HTML/CSS", 85, 2 ],
+      [ "SQL", 95, 38 ],
+
+      [ "Win32 API", 80, 10 ],
+      [ "Linux Kernel", 86, 90 ],
+      [ "Linux API", 98, 91 ],
+      [ "Fuchsia", 7, 96 ],
+      [ "SDL2", 55, 83 ],
+      [ "iOS", 35, 10 ],
+      [ "Android", 30, 12 ],
+      [ "OS/X APIs", 28, 5 ],
+
+      [ "IP Networks", 94, 70 ],
+      [ "Compiler Internals", 88, 78 ],
+      [ "OS Internals", 84, 76 ],
+      [ "Database Internals", 78, 74 ],
+
+      [ "Physical Rendering", 25, 95 ],
+      [ "Blender", 35, 88 ],
+      [ "Digital Electronics", 19, 99 ],
+      [ "Analog Electronics", 2, 95 ],
+
+      [ "Management", 75, 35 ],
+      [ "Recruiting", 50, 45 ],
+      [ "Bowling", 45, 55 ],
+      [ "N++", 38, 78 ],
+      [ "Starcraft", 28, 79 ],
+      [ "Watching Sports", 2, 3 ],
+    ];
+  </script>
+  <script>
+    var width = 1000;
+    var height = 1000;
+    var border = 40;       // border for right and bottom
+    var text_adjust = 50;  // move text if within this of edge
+    var dot_size = 4;      // size of dots
+    var grids = 5;         // number of grids
+
+    function clip(x, min, max) {
+      return x < min ? min : (x > max ? max : x);
+    }
+
+    function dot(x, y, text) {
+      //x = clip(x, border + 2, width - 6);
+      //y = clip(y, 1, height - border - 6);
+
+      if (x < border + text_adjust)  {
+        ctx.textAlign = "left";
+      } else if (x > width - text_adjust) {
+        ctx.textAlign = "right";
+      } else {
+        ctx.textAlign = "center";
+      }
+
+      let ty = y;
+      if (y > height - border - text_adjust) {
+        ty -= dot_size / 2;
+        ctx.textBaseline = "bottom";
+      } else {
+        ty += dot_size * 1.5;
+        ctx.textBaseline = "top";
+      }
+
+      ctx.fillRect(x, y, dot_size, dot_size);
+      ctx.fillText(text, x, ty);
+    }
+
+    function skill(text, exp, joy) {
+      x = border + (joy/100) * (width-border);
+      y = (height-border) - (exp/100) * (height-border);
+      dot(x, y, text);
+    }
+
+    // draw skill points on canvas
+    var ctx = document.getElementById("skills").getContext("2d");
+
+    // draw axes
+    ctx.font = "20px Montserrat";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "bottom";
+    ctx.translate(border-5, height/2);
+    ctx.rotate(-Math.PI / 2);
+    ctx.fillText("Experience", 0, 0);
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.fillText("Joy", width/2, height-10);
+
+    ctx.strokeStyle = "#aaaaaa";
+    ctx.lineJoin = "round";
+    ctx.moveTo(border, 0);
+    ctx.lineTo(border, height-border);
+    ctx.lineTo(width,  height-border);
+    ctx.stroke();
+
+    // draw guide lines
+    for (x = border; x < width; x += (width-border)/grids) {
+      ctx.moveTo(x, 0);
+      ctx.lineTo(x, height-border);
+    }
+    for (y = height-border; y > 0; y -= (height-border)/grids) {
+      ctx.moveTo(border,  y);
+      ctx.lineTo(width, y);
+    }
+    ctx.stroke();
+
+    // draw skills
+    ctx.font = "14px Montserrat";
+    for (i = 0; i < skills.length; i++) {
+      let s = skills[i];
+      skill(s[0],s[1],s[2]);
+    }
+  </script>
+</body>
+</html>

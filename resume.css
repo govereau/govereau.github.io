@@ -1,0 +1,91 @@
+@font-face {
+  font-family: 'Inconsolata';
+  font-style: normal;
+  font-weight: 400;
+  src: url('fonts/I400.woff') format("woff");
+}
+
+@font-face {
+  font-family: 'Inconsolata';
+  font-style: bold;
+  font-weight: 700;
+  src: url('fonts/I700.woff') format("woff");
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400;
+  src: url('fonts/M400.woff') format("woff");
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  font-style: bold;
+  font-weight: 600;
+  src: url('fonts/M600.woff') format("woff");
+}
+
+body {
+    text-rendering: optimizeLegibility;
+    font-family: 'Montserrat', Arial, sans-serif;
+}
+pre {
+    font-family: 'Inconsolata', Arial, sans-serif;
+}
+
+article {
+    width: 900px;
+    margin: 0 auto;
+    overflow: auto;
+}
+header {
+    position:fixed;
+    width:300px;
+}
+footer {
+    position:fixed;
+    bottom:0;
+    width:300px;
+    color: grey;
+    font-style: italic;
+    font-size: 12px;
+}
+#content {
+    width: 600px;
+    float:right;
+}
+
+section h1 {
+    border-bottom: 1px solid;
+}
+
+dt {
+    font-weight: bold;
+}
+time {
+    float:right;
+    font-weight:normal;
+}
+dd {
+    margin-bottom: 1em;
+}
+div.company {
+    font-style: italic;
+    margin-bottom: 0.5em;
+}
+div.location {
+    font-weight: normal;
+    float: right;
+    color: grey;
+}
+
+div.tech:before {
+    content: "Primary Tools:"
+}
+div.tech {
+    margin-top: 0.5em;
+    font-family: 'Inconsolata', Arial, sans-serif;
+    font-size: small;
+    color: grey;
+}
